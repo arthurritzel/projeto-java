@@ -14,7 +14,7 @@ public class Usuario implements Serializable{
     public Usuario(){
 
     }
-    public Usuario(int id, String nome, int id_empresa, int id_agendamento) {
+    public Usuario(int id, String nome, int id_empresa) {
         this.id = id;
         this.nome = nome;
         this.id_empresa = id_empresa;
@@ -57,10 +57,10 @@ public class Usuario implements Serializable{
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", id_empresa=" + id_empresa;
+        return
+                "| Id=" + id +
+                "| Nome='" + nome + '\'' +
+                "| Cpf='" + cpf + '\'' +
+                "| Id_empresa=" + id_empresa;
     }
 }
