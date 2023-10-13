@@ -9,6 +9,7 @@ import model.dao.SellerDao;
 import model.dao.UsuarioDao;
 import model.dao.impl.SellerDaoJDBC;
 import model.entities.Department;
+import model.entities.Empresa;
 import model.entities.Seller;
 import model.entities.Usuario;
 
@@ -72,7 +73,9 @@ public class Program3{
                     System.out.print("-Digite o cpf: ");
                     usuario2.setCpf(sc.next());
                     System.out.print("-Digite o id_empresa: ");
-                    usuario2.setId_empresa(sc.nextInt());
+                    Empresa emp = new Empresa();
+                    emp.setId(sc.nextInt());
+                    usuario2.setEmpresa(emp);
                     usuarioDao.insert(usuario2);
                     break;
 
@@ -86,7 +89,9 @@ public class Program3{
                     System.out.print("-Digite o cpf: ");
                     usuarioUP.setCpf(sc.next());
                     System.out.print("-Digite o id_empresa: ");
-                    usuarioUP.setId_empresa(sc.nextInt());
+                    Empresa empUP = new Empresa();
+                    empUP.setId(sc.nextInt());
+                    usuarioUP.setEmpresa(empUP);
                     usuarioDao.update(usuarioUP);
                     break;
 

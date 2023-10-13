@@ -16,6 +16,7 @@ import db.DbIntegrityException;
 import model.dao.DepartmentDao;
 import model.dao.UsuarioDao;
 import model.entities.Department;
+import model.entities.Empresa;
 import model.entities.Seller;
 import model.entities.Usuario;
 
@@ -39,7 +40,7 @@ public class UsuarioDaoJDBC implements UsuarioDao {
 
             st.setString(1, obj.getNome());
             st.setString(2, obj.getCpf());
-            st.setInt(3, obj.getId_empresa());
+            st.setInt(3, obj.getEmpresa().getId());
 
 
 
@@ -76,7 +77,7 @@ public class UsuarioDaoJDBC implements UsuarioDao {
 
             st.setString(1, obj.getNome());
             st.setString(2, obj.getCpf());
-            st.setInt(3, obj.getId_empresa());
+            st.setInt(3, obj.getEmpresa().getId());
 
             st.setInt(4, obj.getId());
 
@@ -114,14 +115,17 @@ public class UsuarioDaoJDBC implements UsuarioDao {
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT *"
-                            + "FROM usuario "
-                            + "WHERE Id = ?");
+                    "SELECT usuario.*,empresa.nome as EmpName, empresa.cnpj as EmpCnpj"
+                            + "FROM usuario INNER JOIN empresa "
+                            + "ON usuario.id_empresa = empresa.Id "
+                            + "WHERE usuario.Id = ?");
 
             st.setInt(1, id);
             rs = st.executeQuery();
+
             if (rs.next()) {
-                Usuario obj = instantiateUsuario(rs);
+                Empresa emp = instantiateEmpresa(rs);
+                Usuario obj = instantiateUsuario(rs, emp);
                 return obj;
             }
             return null;
@@ -135,13 +139,21 @@ public class UsuarioDaoJDBC implements UsuarioDao {
         }
     }
 
-    private Usuario instantiateUsuario(ResultSet rs) throws SQLException {
+    private Usuario instantiateUsuario(ResultSet rs, Empresa empresa) throws SQLException {
         Usuario obj = new Usuario();
         obj.setId(rs.getInt("id"));
         obj.setNome(rs.getString("nome"));
         obj.setCpf(rs.getString("cpf"));
-        obj.setId_empresa(rs.getInt("id_empresa"));
+        obj.setEmpresa(empresa);
         return obj;
+    }
+
+    private Empresa instantiateEmpresa(ResultSet rs) throws SQLException {
+        Empresa emp = new Empresa();
+        emp.setId(rs.getInt("id_empresa"));
+        emp.setNome(rs.getString("EmpName"));
+        emp.setCnpj(rs.getString("EmpCnpj"));
+        return emp;
     }
 
     @Override
@@ -150,17 +162,24 @@ public class UsuarioDaoJDBC implements UsuarioDao {
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT *"
-                            + "FROM usuario");
+                    "SELECT usuario.*,empresa.nome as EmpName, empresa.cnpj as EmpCnpj "
+                            + "FROM usuario INNER JOIN empresa "
+                            + "ON usuario.id_empresa = empresa.Id ");
 
             rs = st.executeQuery();
 
             List<Usuario> list = new ArrayList<>();
-
+            Map<Integer, Empresa> map = new HashMap<>();
 
             while (rs.next()) {
+                Empresa emp = map.get(rs.getInt("id_empresa"));
 
-                Usuario obj = instantiateUsuario(rs);
+                if (emp == null) {
+                    emp = instantiateEmpresa(rs);
+                    map.put(rs.getInt("id_empresa"), emp);
+                }
+
+                Usuario obj = instantiateUsuario(rs, emp);
                 list.add(obj);
             }
             return list;

@@ -7,17 +7,17 @@ public class Usuario implements Serializable{
     private int id;
     private String nome;
     private String cpf;
-    private int id_empresa;
+    private Empresa empresa;
 
 
 
     public Usuario(){
 
     }
-    public Usuario(int id, String nome, int id_empresa) {
+    public Usuario(int id, String nome, Empresa empresa) {
         this.id = id;
         this.nome = nome;
-        this.id_empresa = id_empresa;
+        this.empresa = empresa;
 
     }
 
@@ -45,15 +45,13 @@ public class Usuario implements Serializable{
         this.nome = nome;
     }
 
-    public int getId_empresa() {
-        return id_empresa;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setId_empresa(int id_empresa) {
-        this.id_empresa = id_empresa;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
-
-
 
     @Override
     public String toString() {
@@ -61,6 +59,6 @@ public class Usuario implements Serializable{
                 "| Id=" + id +
                 "| Nome='" + nome + '\'' +
                 "| Cpf='" + cpf + '\'' +
-                "| Id_empresa=" + id_empresa;
+                "| Nome empresa=" + empresa.getNome();
     }
 }

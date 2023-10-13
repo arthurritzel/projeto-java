@@ -1,5 +1,7 @@
 import model.dao.DaoFactory;
 import model.dao.UsuarioDao;
+import model.entities.Empresa;
+import model.dao.EmpresaDao;
 import model.entities.Usuario;
 
 import javax.swing.*;
@@ -15,16 +17,20 @@ public class Usucamp extends JFrame {
     private JButton voltarButton;
     private JTextField nomeField;
     private JTextField cpfField;
-    private JTextField empresaField;
     private JButton inserirButton;
     private JLabel empresa;
     private JList<Usuario> list1;
     private JButton atualizarButton;
     private JButton deletarButton;
-    private JComboBox<Usuario> empresasDrop;
+    private JComboBox<Empresa> empresasDrop;
 
-    private DefaultComboBoxModel<Usuario> dropModel;
+    private DefaultComboBoxModel<Empresa> dropModel;
     private DefaultListModel<Usuario> listModel;
+
+    EmpresaDao empresaDao = DaoFactory.createEmpresaDao();
+    List<Empresa> empresasDropList = empresaDao.findAll();
+
+    private Empresa empresaNull = new Empresa(-1, "", "");
 
     public Usucamp() {
         listModel = new DefaultListModel<>(); // Inicialize o modelo da lista
@@ -37,10 +43,11 @@ public class Usucamp extends JFrame {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false); // Oculta a instância atual de Usucamp
+                Usucamp.this.dispose();
+//                setVisible(false); // Oculta a instância atual de Usucamp
                 MainUi main = new MainUi(); // Crie uma instância de MainUi
                 main.setContentPane(main.getMainPanel());
-                main.setSize(500, 500);
+                main.setSize(400, 700);
                 main.setLocationRelativeTo(null);
                 main.setVisible(true);
             }
@@ -51,28 +58,31 @@ public class Usucamp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Obtenha os dados do formulário
-                Usuario selectedUsuario = (Usuario) empresasDrop.getSelectedItem();
-                System.out.println(selectedUsuario.getId());
+
 
                 String nome = nomeField.getText();
                 String cpf = cpfField.getText();
-                String empresaText = empresaField.getText();
-                if (nome.isEmpty() || cpf.isEmpty() || empresaText.isEmpty()) {
+
+                if (nome.isEmpty() || cpf.isEmpty() || empresasDrop.getSelectedItem() == empresaNull) {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de inserir um usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
-                        Integer id_empresa = Integer.parseInt(empresaText);
+                        Empresa selectedEmpresa = (Empresa) empresasDrop.getSelectedItem();
+
                         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
                         Usuario usu = new Usuario();
                         usu.setNome(nome);
                         usu.setCpf(cpf);
-                        usu.setId_empresa(id_empresa);
+                        Empresa newemp = new Empresa();
+                        newemp.setId(selectedEmpresa.getId());
+                        usu.setEmpresa(newemp);
                         usuarioDao.insert(usu);
                         loadUserList();
 
                         nomeField.setText("");
                         cpfField.setText("");
-                        empresaField.setText("");
+                        empresasDrop.setSelectedItem(empresaNull);
+
                     } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(null, "O campo Empresa deve ser um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
@@ -91,7 +101,14 @@ public class Usucamp extends JFrame {
                     ID_MOD = list1.getSelectedValue().getId();
                     nomeField.setText(list1.getSelectedValue().getNome());
                     cpfField.setText(list1.getSelectedValue().getCpf());
-                    empresaField.setText(Integer.toString(list1.getSelectedValue().getId_empresa()));
+                    System.out.println(list1.getSelectedValue().getEmpresa());
+
+                    for (Empresa empresaDrop : empresasDropList) {
+                        if(empresaDrop.getId() == list1.getSelectedValue().getEmpresa().getId()) {
+                            empresasDrop.setSelectedItem(empresaDrop);
+                        }
+
+                    }
                 }
             }
         });
@@ -111,7 +128,7 @@ public class Usucamp extends JFrame {
                     }
                     nomeField.setText("");
                     cpfField.setText("");
-                    empresaField.setText("");
+                    empresasDrop.setSelectedItem(empresaNull);
                     ID_MOD = -1;
                 }
             }
@@ -127,21 +144,25 @@ public class Usucamp extends JFrame {
                     // Obtenha os dados do formulário
                     String nome = nomeField.getText();
                     String cpf = cpfField.getText();
-                    String empresaText = empresaField.getText();
-                    if (nome.isEmpty() || cpf.isEmpty() || empresaText.isEmpty()) {
+
+                    if (nome.isEmpty() || cpf.isEmpty() || empresasDrop.getSelectedItem() == empresaNull) {
                         JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de atualizar um usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                     } else {
+                        Empresa selectedEmpresa = (Empresa) empresasDrop.getSelectedItem();
+                        System.out.println(selectedEmpresa.getId());
                         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
                         Usuario usuAtt = new Usuario();
                         usuAtt.setId(ID_MOD);
                         usuAtt.setNome(nome);
                         usuAtt.setCpf(cpf);
-                        usuAtt.setId_empresa(Integer.parseInt(empresaText));
+                        Empresa newemp = new Empresa();
+                        newemp.setId(selectedEmpresa.getId());
+                        usuAtt.setEmpresa(newemp);
                         usuarioDao.update(usuAtt);
                         loadUserList();
                         nomeField.setText("");
                         cpfField.setText("");
-                        empresaField.setText("");
+                        empresasDrop.setSelectedItem(empresaNull);
                         ID_MOD = -1;
                     }
                 }
@@ -158,16 +179,14 @@ public class Usucamp extends JFrame {
         listModel.clear();
         for (Usuario usuario : usuarios) {
             listModel.addElement(usuario);
+
         }
     }
 
     private void loadEmpresas() {
-        UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
-        List<Usuario> usuarios = usuarioDao.findAll();
-
-
-        for (Usuario usuario : usuarios) {
-            dropModel.addElement(usuario);
+        dropModel.addElement(empresaNull);
+        for (Empresa empresaDrop : empresasDropList) {
+            dropModel.addElement(empresaDrop);
         }
     }
 
