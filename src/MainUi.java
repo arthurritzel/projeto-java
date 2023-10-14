@@ -30,9 +30,21 @@ public class MainUi extends JFrame{
 //                setVisible(false); //
                 Usucamp usu = new Usucamp();
                 usu.setContentPane(usu.getUsucamp());
-                usu.setSize(500, 500);
+                usu.setSize(600, 500);
                 usu.setLocationRelativeTo(null);
                 usu.setVisible(true);
+            }
+        });
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainUi.this.dispose();
+
+                Empresacamp emp = new Empresacamp();
+                emp.setContentPane(emp.getEmpresacamp());
+                emp.setSize(600, 500);
+                emp.setLocationRelativeTo(null);
+                emp.setVisible(true);
             }
         });
     }
