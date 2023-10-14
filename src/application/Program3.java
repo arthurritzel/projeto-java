@@ -8,6 +8,7 @@ import model.dao.DaoFactory;
 import model.dao.SellerDao;
 import model.dao.UsuarioDao;
 import model.dao.impl.SellerDaoJDBC;
+import model.dao.impl.UsuarioDaoJDBC;
 import model.entities.Department;
 import model.entities.Empresa;
 import model.entities.Seller;
@@ -23,6 +24,7 @@ public class Program3{
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
+
 
         int choice = 0;
         while (choice != 7) {
@@ -73,9 +75,11 @@ public class Program3{
                     System.out.print("-Digite o cpf: ");
                     usuario2.setCpf(sc.next());
                     System.out.print("-Digite o id_empresa: ");
+
                     Empresa emp = new Empresa();
                     emp.setId(sc.nextInt());
                     usuario2.setEmpresa(emp);
+
                     usuarioDao.insert(usuario2);
                     break;
 

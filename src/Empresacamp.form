@@ -19,7 +19,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Voltar"/>
+          <text value="&lt;- Voltar"/>
         </properties>
       </component>
       <component id="d7a1a" class="javax.swing.JLabel" binding="nomeLabel">

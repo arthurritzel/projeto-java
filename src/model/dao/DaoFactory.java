@@ -16,10 +16,7 @@ public class DaoFactory {
 	public static DepartmentDao createDepartmentDao() {
 		return new DepartmentDaoJDBC(DB.getConnection());
 	}
-	public static UsuarioDao createUsuarioDao() {
-		return new UsuarioDaoJDBC(DB.getConnection());
-	}
-
+	public static UsuarioDao createUsuarioDao() {return new UsuarioDaoJDBC(DB.getConnection());}
 	public static EmpresaDao createEmpresaDao(){
 		return new EmpresaDaoJDBC(DB.getConnection());
 	}
