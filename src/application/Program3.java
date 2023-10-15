@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.dao.DaoFactory;
+import model.dao.PerguntasDao;
 import model.dao.SellerDao;
 import model.dao.UsuarioDao;
 import model.dao.impl.SellerDaoJDBC;
 import model.dao.impl.UsuarioDaoJDBC;
-import model.entities.Department;
-import model.entities.Empresa;
-import model.entities.Seller;
-import model.entities.Usuario;
+import model.entities.*;
 
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -24,6 +22,8 @@ public class Program3{
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
+        PerguntasDao perguntasDao = DaoFactory.createPerguntasDao();
+
 
 
         int choice = 0;
@@ -43,9 +43,9 @@ public class Program3{
                 case 1:
                     System.out.println("=== Find usuario by ID ===");
                     System.out.print("Enter seller ID: ");
-                    int usuarioId = sc.nextInt();
-                    Usuario usuario = usuarioDao.findById(usuarioId);
-                    System.out.println(usuario);
+                    int perguntasId = sc.nextInt();
+                    Perguntas perguntas = perguntasDao.findById(perguntasId);
+                    System.out.println(perguntas);
                     break;
 
                 case 2:
@@ -61,26 +61,22 @@ public class Program3{
 
                 case 3:
                     System.out.println("=== Find All Usuarios ===");
-                    List<Usuario> allUsuarios = usuarioDao.findAll();
-                    for (Usuario obj : allUsuarios) {
+                    List<Perguntas> allPerguntas = perguntasDao.findAll();
+                    for (Perguntas obj : allPerguntas) {
                         System.out.println(obj.toString());
                     }
                     break;
 
                 case 4:
-                    System.out.println("=== Insert usuario ===");
-                    Usuario usuario2 = new Usuario();
-                    System.out.print("-Digite o nome: ");
-                    usuario2.setNome(sc.next());
-                    System.out.print("-Digite o cpf: ");
-                    usuario2.setCpf(sc.next());
-                    System.out.print("-Digite o id_empresa: ");
-
-                    Empresa emp = new Empresa();
-                    emp.setId(sc.nextInt());
-                    usuario2.setEmpresa(emp);
-
-                    usuarioDao.insert(usuario2);
+                    System.out.println("=== Insert pergunta ===");
+                    Perguntas perguntas2 = new Perguntas();
+                    System.out.print("-Digite a pergunta: ");
+                    perguntas2.setCabecalho(sc.next());
+                    System.out.print("-Digite o tipo de prova : ");
+                    perguntas2.setTipo_prova(sc.next());
+                    System.out.println("Digite o nivel da pergunta : ");
+                    perguntas2.setNivel(sc.nextInt());
+                    perguntasDao.insert(perguntas2);
                     break;
 
                 case 5:
