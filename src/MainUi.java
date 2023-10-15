@@ -8,8 +8,8 @@ public class MainUi extends JFrame{
     private JButton USUARIOButton;
     private JButton button2;
 
-    private JButton button3;
-    private JButton button4;
+    private JButton perguntaButton;
+    private JButton empresaButton;
     private JButton button5;
     private JLabel img;
 
@@ -35,7 +35,7 @@ public class MainUi extends JFrame{
                 usu.setVisible(true);
             }
         });
-        button4.addActionListener(new ActionListener() {
+        empresaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainUi.this.dispose();
@@ -47,6 +47,20 @@ public class MainUi extends JFrame{
                 emp.setVisible(true);
             }
         });
+        perguntaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainUi.this.dispose();
+
+                Perguntascamp perguntas = new Perguntascamp();
+                perguntas.setContentPane(perguntas.getPerguntasPane());
+                perguntas.setSize(600, 500);
+                perguntas.setLocationRelativeTo(null);
+                perguntas.setVisible(true);
+            }
+        });
+
+
     }
 
     public static void main(String[] args) {
