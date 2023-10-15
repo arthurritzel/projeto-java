@@ -1,28 +1,20 @@
 package application;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import model.dao.DaoFactory;
-import model.dao.SellerDao;
 import model.dao.UsuarioDao;
-import model.dao.impl.SellerDaoJDBC;
-import model.dao.impl.UsuarioDaoJDBC;
-import model.entities.Department;
 import model.entities.Empresa;
-import model.entities.Seller;
 import model.entities.Usuario;
 
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 public class Program3{
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        SellerDao sellerDao = DaoFactory.createSellerDao();
+
         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
 
 
@@ -52,11 +44,7 @@ public class Program3{
                     System.out.println("=== Find Sellers by Department ===");
                     System.out.print("Enter department ID: ");
                     int departmentId = sc.nextInt();
-                    Department department = new Department(departmentId, null);
-                    List<Seller> sellersByDepartment = sellerDao.findByDepartment(department);
-                    for (Seller obj : sellersByDepartment) {
-                        System.out.println(obj);
-                    }
+
                     break;
 
                 case 3:

@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entities.Seller;
 import model.entities.Usuario;
 
 import java.util.List;
