@@ -10,7 +10,7 @@ public class MainUi extends JFrame{
 
     private JButton perguntaButton;
     private JButton empresaButton;
-    private JButton button5;
+    private JButton AGENDAMENTOButton;
     private JLabel img;
 
     public JPanel getMainPanel() {
@@ -61,6 +61,18 @@ public class MainUi extends JFrame{
         });
 
 
+        AGENDAMENTOButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainUi.this.dispose();
+
+                Agendamentocamp agendamento = new Agendamentocamp();
+                agendamento.setContentPane(agendamento.getAgendamentoPanel());
+                agendamento.setSize(700, 500);
+                agendamento.setLocationRelativeTo(null);
+                agendamento.setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {

@@ -66,7 +66,7 @@ public class Agendamento implements Serializable {
         return "| Id=" + id +
                 "| Dia='" + dia + '\'' +
                 "| Hora='" + hora + '\'' +
-                "| ok='" + feito + '\'' +
+                "| realizado='" + feito + '\'' +
                 "| usuario=" + usuario.getNome();
     }
 
