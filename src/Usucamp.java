@@ -101,7 +101,7 @@ public class Usucamp extends JFrame {
                     ID_MOD = usuarioList.getSelectedValue().getId();
                     nomeField.setText(usuarioList.getSelectedValue().getNome());
                     cpfField.setText(usuarioList.getSelectedValue().getCpf());
-                    System.out.println(usuarioList.getSelectedValue().getEmpresa());
+
 
                     for (Empresa empresaDrop : empresasDropList) {
                         if(empresaDrop.getId() == usuarioList.getSelectedValue().getEmpresa().getId()) {
@@ -149,7 +149,7 @@ public class Usucamp extends JFrame {
                         JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de atualizar um usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                     } else {
                         Empresa selectedEmpresa = (Empresa) empresasDrop.getSelectedItem();
-                        System.out.println(selectedEmpresa.getId());
+                       
                         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
                         Usuario usuAtt = new Usuario();
                         usuAtt.setId(ID_MOD);
