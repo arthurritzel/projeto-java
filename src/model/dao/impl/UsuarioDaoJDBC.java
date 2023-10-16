@@ -111,7 +111,7 @@ public class UsuarioDaoJDBC implements UsuarioDao {
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT usuario.*,empresa.nome as EmpName, empresa.cnpj as EmpCnpj"
+                    "SELECT usuario.*,empresa.nome as EmpName, empresa.cnpj as EmpCnpj "
                             + "FROM usuario INNER JOIN empresa "
                             + "ON usuario.id_empresa = empresa.Id "
                             + "WHERE usuario.Id = ?");
