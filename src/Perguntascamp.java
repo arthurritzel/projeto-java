@@ -10,10 +10,10 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class Perguntascamp extends JFrame{
-    private JTextField nivelField;
+    private JSpinner nivelField;
     private JButton voltarButton;
     private JTextField cabrcalhoField;
-    private JTextField tipoField;
+    private JComboBox tipoField;
     private JButton inserirButton;
     private JButton deletarButton;
     private JButton atualizarButton;
@@ -45,9 +45,9 @@ public class Perguntascamp extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String cabecalho = cabrcalhoField.getText();
-                String tipo = tipoField.getText();
-                String nivel = nivelField.getText();
-                if (cabecalho.isEmpty() || tipo.isEmpty() || nivel.isEmpty()){
+                String tipo = tipoField.getSelectedItem().toString();
+                String nivel = nivelField.getValue().toString();
+                if (cabecalho.isEmpty() || tipo.isEmpty() || nivel.equals("0")){
                     JOptionPane.showMessageDialog(null,"Preencha todos os campos antes de inserir uma empresa","Erro", JOptionPane.ERROR_MESSAGE);
                 }else{
                     try{
@@ -66,8 +66,8 @@ public class Perguntascamp extends JFrame{
                     }
                 }
                 cabrcalhoField.setText("");
-                tipoField.setText("");
-                nivelField.setText("");
+                tipoField.setSelectedItem("");
+                nivelField.setValue(0);
             }
         });
         perguntasList.addListSelectionListener(new ListSelectionListener() {
@@ -76,8 +76,8 @@ public class Perguntascamp extends JFrame{
                 if (perguntasList.getSelectedValue() != null) {
                     ID_MOD = perguntasList.getSelectedValue().getId();
                     cabrcalhoField.setText(perguntasList.getSelectedValue().getCabecalho());
-                    tipoField.setText(perguntasList.getSelectedValue().getTipo_prova());
-                    nivelField.setText(Integer.toString(perguntasList.getSelectedValue().getNivel()));
+                    tipoField.setSelectedItem(perguntasList.getSelectedValue().getTipo_prova());
+                    nivelField.setValue(perguntasList.getSelectedValue().getNivel());
                 }
             }
         });
@@ -94,8 +94,8 @@ public class Perguntascamp extends JFrame{
                         loadPerguntasList();
                     }
                     cabrcalhoField.setText("");
-                    tipoField.setText("");
-                    nivelField.setText("");
+                    tipoField.setSelectedItem("");
+                    nivelField.setValue(0);
                     ID_MOD = -1;
                 }
             }
@@ -107,9 +107,9 @@ public class Perguntascamp extends JFrame{
                     JOptionPane.showMessageDialog(null, "Selecione o dado a ser deletado.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }else{
                     String cabecalho = cabrcalhoField.getText();
-                    String tipo = tipoField.getText();
-                    String nivel = nivelField.getText();
-                    if (cabecalho.isEmpty() || tipo.isEmpty() || nivel.isEmpty()) {
+                    String tipo = tipoField.getSelectedItem().toString();
+                    String nivel = nivelField.getValue().toString();
+                    if (cabecalho.isEmpty() || tipo.isEmpty() || nivel.equals("0")) {
                         JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de atualizar um usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }else{
                         try{
@@ -129,8 +129,8 @@ public class Perguntascamp extends JFrame{
                         }
                     }
                     cabrcalhoField.setText("");
-                    tipoField.setText("");
-                    nivelField.setText("");
+                    tipoField.setSelectedItem("");
+                    nivelField.setValue(0);
                     ID_MOD = -1;
                 }
             }

@@ -149,7 +149,7 @@ public class Usucamp extends JFrame {
                         JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de atualizar um usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                     } else {
                         Empresa selectedEmpresa = (Empresa) empresasDrop.getSelectedItem();
-                       
+
                         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
                         Usuario usuAtt = new Usuario();
                         usuAtt.setId(ID_MOD);
