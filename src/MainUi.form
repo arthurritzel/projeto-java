@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="b397f" class="javax.swing.JButton" binding="button4" default-binding="true">
+      <component id="b397f" class="javax.swing.JButton" binding="empresaButton" default-binding="true">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -34,20 +34,20 @@
           <text value="USUARIO"/>
         </properties>
       </component>
-      <component id="5eb92" class="javax.swing.JButton" binding="button5" default-binding="true">
+      <component id="5eb92" class="javax.swing.JButton" binding="AGENDAMENTOButton" default-binding="true">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="AGENDAMENTO"/>
         </properties>
       </component>
-      <component id="9c6bc" class="javax.swing.JButton" binding="button3" default-binding="true">
+      <component id="9c6bc" class="javax.swing.JButton" binding="perguntaButton">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="PERGUNTAS"/>
         </properties>
       </component>
       <component id="2b8ab" class="javax.swing.JButton" binding="button2" default-binding="true">

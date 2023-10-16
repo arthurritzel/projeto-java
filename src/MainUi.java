@@ -8,9 +8,9 @@ public class MainUi extends JFrame{
     private JButton USUARIOButton;
     private JButton button2;
 
-    private JButton button3;
-    private JButton button4;
-    private JButton button5;
+    private JButton perguntaButton;
+    private JButton empresaButton;
+    private JButton AGENDAMENTOButton;
     private JLabel img;
 
     public JPanel getMainPanel() {
@@ -35,7 +35,7 @@ public class MainUi extends JFrame{
                 usu.setVisible(true);
             }
         });
-        button4.addActionListener(new ActionListener() {
+        empresaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainUi.this.dispose();
@@ -45,6 +45,32 @@ public class MainUi extends JFrame{
                 emp.setSize(600, 500);
                 emp.setLocationRelativeTo(null);
                 emp.setVisible(true);
+            }
+        });
+        perguntaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainUi.this.dispose();
+
+                Perguntascamp perguntas = new Perguntascamp();
+                perguntas.setContentPane(perguntas.getPerguntasPane());
+                perguntas.setSize(600, 500);
+                perguntas.setLocationRelativeTo(null);
+                perguntas.setVisible(true);
+            }
+        });
+
+
+        AGENDAMENTOButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainUi.this.dispose();
+
+                Agendamentocamp agendamento = new Agendamentocamp();
+                agendamento.setContentPane(agendamento.getAgendamentoPanel());
+                agendamento.setSize(700, 500);
+                agendamento.setLocationRelativeTo(null);
+                agendamento.setVisible(true);
             }
         });
     }

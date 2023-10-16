@@ -14,9 +14,10 @@ public class Usuario implements Serializable{
     public Usuario(){
 
     }
-    public Usuario(int id, String nome, Empresa empresa) {
+    public Usuario(int id, String nome, String cpf, Empresa empresa) {
         this.id = id;
         this.nome = nome;
+        this.cpf = cpf;
         this.empresa = empresa;
 
     }

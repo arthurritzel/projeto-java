@@ -12,12 +12,8 @@ import java.util.Map;
 
 import db.DB;
 import db.DbException;
-import db.DbIntegrityException;
-import model.dao.DepartmentDao;
 import model.dao.UsuarioDao;
-import model.entities.Department;
 import model.entities.Empresa;
-import model.entities.Seller;
 import model.entities.Usuario;
 
 public class UsuarioDaoJDBC implements UsuarioDao {
@@ -115,7 +111,7 @@ public class UsuarioDaoJDBC implements UsuarioDao {
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT usuario.*,empresa.nome as EmpName, empresa.cnpj as EmpCnpj"
+                    "SELECT usuario.*,empresa.nome as EmpName, empresa.cnpj as EmpCnpj "
                             + "FROM usuario INNER JOIN empresa "
                             + "ON usuario.id_empresa = empresa.Id "
                             + "WHERE usuario.Id = ?");

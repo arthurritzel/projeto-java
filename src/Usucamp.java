@@ -19,7 +19,7 @@ public class Usucamp extends JFrame {
     private JTextField cpfField;
     private JButton inserirButton;
     private JLabel empresa;
-    private JList<Usuario> list1;
+    private JList<Usuario> usuarioList;
     private JButton atualizarButton;
     private JButton deletarButton;
     private JComboBox<Empresa> empresasDrop;
@@ -34,7 +34,7 @@ public class Usucamp extends JFrame {
 
     public Usucamp() {
         listModel = new DefaultListModel<>(); // Inicialize o modelo da lista
-        list1.setModel(listModel);
+        usuarioList.setModel(listModel);
 
         dropModel = new DefaultComboBoxModel<>();
         empresasDrop.setModel(dropModel);
@@ -94,17 +94,17 @@ public class Usucamp extends JFrame {
         loadUserList();
 
         // Quando um item da lista é selecionado
-        list1.addListSelectionListener(new ListSelectionListener() {
+        usuarioList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (list1.getSelectedValue() != null) {
-                    ID_MOD = list1.getSelectedValue().getId();
-                    nomeField.setText(list1.getSelectedValue().getNome());
-                    cpfField.setText(list1.getSelectedValue().getCpf());
-                    System.out.println(list1.getSelectedValue().getEmpresa());
+                if (usuarioList.getSelectedValue() != null) {
+                    ID_MOD = usuarioList.getSelectedValue().getId();
+                    nomeField.setText(usuarioList.getSelectedValue().getNome());
+                    cpfField.setText(usuarioList.getSelectedValue().getCpf());
+
 
                     for (Empresa empresaDrop : empresasDropList) {
-                        if(empresaDrop.getId() == list1.getSelectedValue().getEmpresa().getId()) {
+                        if(empresaDrop.getId() == usuarioList.getSelectedValue().getEmpresa().getId()) {
                             empresasDrop.setSelectedItem(empresaDrop);
                         }
 
@@ -149,7 +149,7 @@ public class Usucamp extends JFrame {
                         JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de atualizar um usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                     } else {
                         Empresa selectedEmpresa = (Empresa) empresasDrop.getSelectedItem();
-                        System.out.println(selectedEmpresa.getId());
+
                         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
                         Usuario usuAtt = new Usuario();
                         usuAtt.setId(ID_MOD);

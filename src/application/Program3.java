@@ -1,29 +1,25 @@
 package application;
 
-import java.util.Date;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import model.dao.AgendamentoDao;
 import model.dao.DaoFactory;
-import model.dao.SellerDao;
 import model.dao.UsuarioDao;
-import model.dao.impl.SellerDaoJDBC;
-import model.dao.impl.UsuarioDaoJDBC;
-import model.entities.Department;
+import model.entities.Agendamento;
 import model.entities.Empresa;
-import model.entities.Seller;
 import model.entities.Usuario;
 
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 public class Program3{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         Scanner sc = new Scanner(System.in);
 
-        SellerDao sellerDao = DaoFactory.createSellerDao();
+
         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
+        AgendamentoDao agendaDao = DaoFactory.createAgendaDao();
 
 
         int choice = 0;
@@ -44,66 +40,66 @@ public class Program3{
                     System.out.println("=== Find usuario by ID ===");
                     System.out.print("Enter seller ID: ");
                     int usuarioId = sc.nextInt();
-                    Usuario usuario = usuarioDao.findById(usuarioId);
-                    System.out.println(usuario);
+                    Agendamento agend1 = agendaDao.findById(usuarioId);
+                    System.out.println(agend1);
                     break;
 
                 case 2:
                     System.out.println("=== Find Sellers by Department ===");
                     System.out.print("Enter department ID: ");
                     int departmentId = sc.nextInt();
-                    Department department = new Department(departmentId, null);
-                    List<Seller> sellersByDepartment = sellerDao.findByDepartment(department);
-                    for (Seller obj : sellersByDepartment) {
-                        System.out.println(obj);
-                    }
+
                     break;
 
                 case 3:
                     System.out.println("=== Find All Usuarios ===");
-                    List<Usuario> allUsuarios = usuarioDao.findAll();
-                    for (Usuario obj : allUsuarios) {
+                    List<Agendamento> allAgendamento = agendaDao.findAll();
+                    for (Agendamento obj : allAgendamento) {
                         System.out.println(obj.toString());
                     }
                     break;
 
                 case 4:
                     System.out.println("=== Insert usuario ===");
-                    Usuario usuario2 = new Usuario();
+                    Agendamento agend = new Agendamento();
                     System.out.print("-Digite o nome: ");
-                    usuario2.setNome(sc.next());
+                    agend.setDia(sc.next());
                     System.out.print("-Digite o cpf: ");
-                    usuario2.setCpf(sc.next());
-                    System.out.print("-Digite o id_empresa: ");
+                    agend.setHora(sc.next());
+                    agend.setFeito(true);
+                    System.out.print("-Digite o id_usuario: ");
 
-                    Empresa emp = new Empresa();
-                    emp.setId(sc.nextInt());
-                    usuario2.setEmpresa(emp);
+                    Usuario usu = new Usuario();
+                    usu.setId(sc.nextInt());
+                    agend.setUsuario(usu);
 
-                    usuarioDao.insert(usuario2);
+                    agendaDao.insert(agend);
                     break;
 
                 case 5:
                     System.out.println("=== Update Usuario ===");
-                    Usuario usuarioUP = new Usuario();
-                    System.out.print("-Digite o id para alterar: ");
-                    usuarioUP.setId(sc.nextInt());
+                    Agendamento agend2 = new Agendamento();
+                    System.out.println("Digite o id para alterar");
+                    agend2.setId(sc.nextInt());
                     System.out.print("-Digite o nome: ");
-                    usuarioUP.setNome(sc.next());
+                    agend2.setDia(sc.next());
                     System.out.print("-Digite o cpf: ");
-                    usuarioUP.setCpf(sc.next());
-                    System.out.print("-Digite o id_empresa: ");
-                    Empresa empUP = new Empresa();
-                    empUP.setId(sc.nextInt());
-                    usuarioUP.setEmpresa(empUP);
-                    usuarioDao.update(usuarioUP);
+                    agend2.setHora(sc.next());
+                    agend2.setFeito(true);
+                    System.out.print("-Digite o id_usuario: ");
+
+                    Usuario usu2 = new Usuario();
+                    usu2.setId(sc.nextInt());
+                    agend2.setUsuario(usu2);
+
+                    agendaDao.update(agend2);
                     break;
 
                 case 6:
                     System.out.println("=== Delete Usuario ===");
                     System.out.print("-Digite o id para excluir: ");
                     int id = sc.nextInt();
-                    usuarioDao.deleteById(id);
+                    agendaDao.deleteById(id);
                     break;
 
                 case 7:
