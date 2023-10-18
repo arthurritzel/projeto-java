@@ -6,9 +6,11 @@ import java.util.Scanner;
 
 import model.dao.AgendamentoDao;
 import model.dao.DaoFactory;
+import model.dao.RespostasDao;
 import model.dao.UsuarioDao;
 import model.entities.Agendamento;
 import model.entities.Empresa;
+import model.entities.Respostas;
 import model.entities.Usuario;
 
 public class Program3{
@@ -20,7 +22,7 @@ public class Program3{
 
         UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
         AgendamentoDao agendaDao = DaoFactory.createAgendaDao();
-
+        RespostasDao respostasDao = DaoFactory.createRespostasDao();
 
         int choice = 0;
         while (choice != 7) {
@@ -53,8 +55,8 @@ public class Program3{
 
                 case 3:
                     System.out.println("=== Find All Usuarios ===");
-                    List<Agendamento> allAgendamento = agendaDao.findAll();
-                    for (Agendamento obj : allAgendamento) {
+                    List<Respostas> allAgendamento = respostasDao.findAll();
+                    for (Respostas obj : allAgendamento) {
                         System.out.println(obj.toString());
                     }
                     break;

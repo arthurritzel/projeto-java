@@ -1,10 +1,7 @@
 package model.dao;
 
 import db.DB;
-import model.dao.impl.AgendamentoDaoJDBC;
-import model.dao.impl.EmpresaDaoJDBC;
-import model.dao.impl.PerguntasDaoJDBC;
-import model.dao.impl.UsuarioDaoJDBC;
+import model.dao.impl.*;
 
 public class DaoFactory {
 
@@ -23,4 +20,8 @@ public class DaoFactory {
 
 	public static AgendamentoDao createAgendaDao(){
 		return new AgendamentoDaoJDBC(DB.getConnection());}
+
+	public static RespostasDao createRespostasDao(){
+		return new RespostasDaoJDBC(DB.getConnection());
+	}
 }

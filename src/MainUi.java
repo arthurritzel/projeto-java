@@ -73,6 +73,18 @@ public class MainUi extends JFrame{
                 agendamento.setVisible(true);
             }
         });
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainUi.this.dispose();
+
+                Respostascamp respostas = new Respostascamp();
+                respostas.setContentPane(respostas.getRespostasPanel());
+                respostas.setSize(700, 500);
+                respostas.setLocationRelativeTo(null);
+                respostas.setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
