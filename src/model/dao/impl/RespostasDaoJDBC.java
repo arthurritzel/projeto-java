@@ -186,4 +186,43 @@ public class RespostasDaoJDBC implements RespostasDao {
             DB.closeResultSet(rs);
         }
     }
+
+    @Override
+    public List<Respostas> findByPer(Integer id) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT resposta.*,perguntas.cabecalho as Cabecalho, perguntas.tipo_prova as TipoProva "
+                            + "FROM resposta INNER JOIN perguntas "
+                            + "ON resposta.id_pergunta = perguntas.Id "
+                            + "WHERE resposta.id_pergunta = ?");
+
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            List<Respostas> list = new ArrayList<>();
+            Map<Integer, Perguntas> map = new HashMap<>();
+
+            while (rs.next()) {
+                Perguntas per = map.get(rs.getInt("id_pergunta"));
+
+                if (per == null) {
+                    per = instantiatePergunta(rs);
+                    map.put(rs.getInt("id_pergunta"), per);
+                }
+
+                Respostas obj = instantiateResposta(rs, per);
+                list.add(obj);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
 }

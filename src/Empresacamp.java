@@ -1,6 +1,8 @@
 import model.dao.DaoFactory;
+import model.dao.UsuarioDao;
 import model.entities.Empresa;
 import model.dao.EmpresaDao;
+import model.entities.Usuario;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -21,11 +23,17 @@ public class Empresacamp extends JFrame{
     private JList<Empresa> empresaList;
     private JLabel nomeLabel;
     private JLabel cnpjLabel;
+    private JButton visualizarUsuariosDaEmpresaButton;
+    private JList<Usuario> usuarioList;
     private DefaultListModel<Empresa> listModel;
+    private DefaultListModel<Usuario> listModelUsu;
     
     public Empresacamp(){
         listModel = new DefaultListModel<>();
         empresaList.setModel(listModel);
+
+        listModelUsu = new DefaultListModel<>();
+        usuarioList.setModel(listModelUsu);
 
         voltarButton.addActionListener(new ActionListener() {
             @Override
@@ -123,6 +131,27 @@ public class Empresacamp extends JFrame{
             }
         });
 
+        visualizarUsuariosDaEmpresaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
+                if(ID_MOD == -1){
+                    JOptionPane.showMessageDialog(null, "Selecione a empresa.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }else{
+                        List<Usuario> obj = usuarioDao.findByEmp(ID_MOD);
+                    if(obj.isEmpty()){
+                        JOptionPane.showMessageDialog(null, "Empresa sem usuarios.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }else {
+                        loadUsuarioEmpList(obj);
+                    }
+
+                    nomeField.setText("");
+                    cnpjField.setText("");
+                    ID_MOD = -1;
+                }
+            }
+
+        });
     }
 
     private void loadEmpresaList(){
@@ -132,6 +161,13 @@ public class Empresacamp extends JFrame{
         listModel.clear();
         for (Empresa empresa : empresas){
             listModel.addElement(empresa);
+        }
+    }
+
+    private void loadUsuarioEmpList(List<Usuario> obj) {
+        listModelUsu.clear();
+        for (Usuario usuario : obj){
+            listModelUsu.addElement(usuario);
         }
     }
 

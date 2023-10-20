@@ -10,5 +10,6 @@ public interface RespostasDao {
     void update(Respostas obj);
     void deleteById(Integer id);
     Respostas findById(Integer id);
+    List<Respostas> findByPer(Integer id);
     List<Respostas> findAll();
 }

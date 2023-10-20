@@ -188,4 +188,44 @@ public class UsuarioDaoJDBC implements UsuarioDao {
             DB.closeResultSet(rs);
         }
     }
+
+    @Override
+    public List<Usuario> findByEmp(Integer id) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT usuario.*,empresa.nome as EmpName, empresa.cnpj as EmpCnpj "
+                            + "FROM usuario INNER JOIN empresa "
+                            + "ON usuario.id_empresa = empresa.Id "
+                            + "WHERE usuario.id_empresa = ?");
+
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            List<Usuario> list = new ArrayList<>();
+            Map<Integer, Empresa> map = new HashMap<>();
+
+            while (rs.next()) {
+                Empresa emp = map.get(rs.getInt("id_empresa"));
+
+                if (emp == null) {
+                    emp = instantiateEmpresa(rs);
+                    map.put(rs.getInt("id_empresa"), emp);
+                }
+
+                Usuario obj = instantiateUsuario(rs, emp);
+                list.add(obj);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
+    }
+
 }

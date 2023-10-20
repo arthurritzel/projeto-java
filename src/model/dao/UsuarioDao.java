@@ -9,5 +9,6 @@ public interface UsuarioDao {
     void update(Usuario obj);
     void deleteById(Integer id);
     Usuario findById(Integer id);
+    List<Usuario> findByEmp(Integer id);
     List<Usuario> findAll();
 }

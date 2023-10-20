@@ -1,6 +1,8 @@
 import model.dao.DaoFactory;
 import model.dao.PerguntasDao;
+import model.dao.RespostasDao;
 import model.entities.Perguntas;
+import model.entities.Respostas;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -19,14 +21,20 @@ public class Perguntascamp extends JFrame{
     private JButton atualizarButton;
     private JList<Perguntas> perguntasList;
     private JPanel perguntasPane;
+    private JButton visualizarRespostasButton;
+    private JList<Respostas> respostasList;
 
     private DefaultListModel<Perguntas> listModel;
+    private DefaultListModel<Respostas> listModelRes;
 
     private int ID_MOD = -1;
 
     public Perguntascamp(){
         listModel = new DefaultListModel<>();
         perguntasList.setModel(listModel);
+
+        listModelRes = new DefaultListModel<>();
+        respostasList.setModel(listModelRes);
 
         voltarButton.addActionListener(new ActionListener() {
             @Override
@@ -135,6 +143,28 @@ public class Perguntascamp extends JFrame{
                 }
             }
         });
+        visualizarRespostasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RespostasDao respostasDao = DaoFactory.createRespostasDao();
+                if(ID_MOD == -1){
+                    JOptionPane.showMessageDialog(null, "Selecione a pergunta.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }else{
+
+                        List<Respostas> obj = respostasDao.findByPer(ID_MOD);
+                    if(obj.isEmpty()){
+                        JOptionPane.showMessageDialog(null, "Pergunta sem respostas.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }else {
+                        loadRespostasPerList(obj);
+                    }
+
+                    cabrcalhoField.setText("");
+                    tipoField.setSelectedItem("");
+                    nivelField.setValue(0);
+                    ID_MOD = -1;
+                }
+            }
+        });
     }
 
     private void loadPerguntasList(){
@@ -147,6 +177,12 @@ public class Perguntascamp extends JFrame{
         }
     }
 
+    private void loadRespostasPerList(List<Respostas> obj){
+        listModelRes.clear();
+        for (Respostas resposta : obj){
+            listModelRes.addElement(resposta);
+        }
+    }
     public JPanel getPerguntasPane() {
         return perguntasPane;
     }
